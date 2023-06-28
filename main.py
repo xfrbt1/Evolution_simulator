@@ -1,4 +1,5 @@
-
+from simulation_state.simulation_state import Simulation_State
+simulation_state = Simulation_State()
 
 if __name__ == '__main__':
-    pass
+    simulation_state.run()
