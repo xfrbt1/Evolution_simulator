@@ -25,7 +25,7 @@ class Simulation_State:
 
     def new_state(self):
         self.nutrients = Nutrient(self)
-        self.red_entities = Red_Entity(self)
+        # self.red_entities = Red_Entity(self)
 
     def update(self):
         pg.display.set_caption(f"{CAPTION}")
@@ -33,13 +33,14 @@ class Simulation_State:
         self.clock.tick(FPS)
 
         self.nutrients.update()
-        self.red_entities.update()
+        # self.red_entities.update()
 
     def draw(self):
         self.screen.fill(color_white)
 
         self.nutrients.draw()
-        self.red_entities.draw()
+        print(self.nutrients.nutrient_array)
+        # self.red_entities.draw()
 
     @staticmethod
     def check_event():
