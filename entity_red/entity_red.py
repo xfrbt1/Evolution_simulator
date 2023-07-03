@@ -36,19 +36,34 @@ class Red_Entity:
                                       REDS.target_y,
                                       REDS.target_sum,
                                       REDS.energy,
-                                      REDS.speed+2])
+                                      REDS.speed])
+
+        self.red_entity_array.append([REDS.entity_x+200,
+                                      REDS.entity_y+300,
+                                      REDS.target_x,
+                                      REDS.target_y,
+                                      REDS.target_sum,
+                                      REDS.energy,
+                                      REDS.speed])
+
+        self.red_entity_array.append([REDS.entity_x-100,
+                                      REDS.entity_y+100,
+                                      REDS.target_x,
+                                      REDS.target_y,
+                                      REDS.target_sum,
+                                      REDS.energy,
+                                      REDS.speed])
 
     def choose_target(self):
         for entity in self.red_entity_array:
-            if entity[2] is None or entity[3] is None and len(self.nutrients.nutrient_array) > 0:
-                for nutrient in self.nutrients.nutrient_array:
-                    xd = abs(entity[0] - nutrient[0])
-                    yd = abs(entity[1] - nutrient[1])
-                    s = xd + yd
-                    if entity[4] is None or s < entity[4]:
-                        entity[2] = nutrient[0]
-                        entity[3] = nutrient[1]
-                        entity[4] = s
+            for nutrient in self.nutrients.nutrient_array:
+                xd = abs(entity[0] - nutrient[0])
+                yd = abs(entity[1] - nutrient[1])
+                s = xd + yd
+                if entity[4] is None or s < entity[4]:
+                    entity[2] = nutrient[0]
+                    entity[3] = nutrient[1]
+                    entity[4] = s
 
     def move(self):
         for entity in self.red_entity_array:
@@ -70,26 +85,44 @@ class Red_Entity:
                 entity[3] = None
                 entity[4] = None
 
-    # def check_nutrients_reds_match(self):
-    #
-    #     for entity in self.red_entity_array:
-    #         indexes_del = list()
-    #         for i in range(len(self.nutrients.nutrient_array)):
-    #             if abs(entity[0] - self.nutrients.nutrient_array[i][0]) < entity[6] and\
-    #                     abs(entity[1] - self.nutrients.nutrient_array[i][1]) < entity[6]:
-    #
-    #                 entity[2] = None
-    #                 entity[3] = None
-    #                 entity[4] = None
-    #                 entity[5] += 1
-    #
-    #                 if i not in indexes_del:
-    #                     indexes_del.append(i)
-    #
-    #                 for j in indexes_del:
-    #                     self.nutrients.nutrient_array.pop(j)
+    def set_target_none(self, i):
+        self.red_entity_array[i][2] = None
+        self.red_entity_array[i][3] = None
+        self.red_entity_array[i][4] = None
 
-    def increment_energy(self, i):
+    def reds_eat_nutrients(self):
+        nutrients_delete = list()
+
+        for entity in range(len(self.red_entity_array)):
+            for nutrient in range(len(self.nutrients.nutrient_array)):
+
+                if abs(self.red_entity_array[entity][0] - self.nutrients.nutrient_array[nutrient][0]) <= 2:
+                    if abs(self.red_entity_array[entity][1] - self.nutrients.nutrient_array[nutrient][1]) <= 2:
+
+                        if self.nutrients.nutrient_array[nutrient] not in nutrients_delete:
+                            nutrients_delete.append(self.nutrients.nutrient_array[nutrient])
+                            self.red_entity_array[entity][5] += 1
+                            print(*self.red_entity_array)
+                            print(*nutrients_delete)
+                            break
+
+        for i in nutrients_delete:
+            self.nutrients.nutrient_array.remove(i)
+
+    def check_collisions(self):
+        for entity_i in self.red_entity_array:
+            for entity_j in self.red_entity_array:
+
+                if entity_i is entity_j:
+                    continue
+                if entity_i[0] == entity_j[0]:
+                    if entity_i[1] == entity_j[1]:
+                        entity_i[0] += 10
+                        entity_i[1] += 10
+                        entity_j[0] -= 10
+                        entity_j[1] -= 10
+
+    def increment_energy(self):
         pass
 
     def decrement_energy(self):
@@ -99,10 +132,11 @@ class Red_Entity:
         pass
 
     def update(self):
-        self.check_nutrients_existence()
         self.choose_target()
+        self.check_nutrients_existence()
+        self.reds_eat_nutrients()
+        self.check_collisions()
         self.move()
-        print(self.red_entity_array)
 
     def draw(self):
         for i in self.red_entity_array:

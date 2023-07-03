@@ -16,18 +16,18 @@ class Nutrient:
         self.nutrient_array.append((200, 200))
         self.nutrient_array.append((600, 500))
 
-    def new_particle_t(self):
-        if int((pg.time.get_ticks() - self.state.start_time) / 1000) % 10 == 0:
+    def new_particle_timer(self):
+        if int((pg.time.get_ticks() - self.state.start_time) / 1000) % NUTRIENTS_PER_SEC == 0:
             self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
-    def new_particle_p(self):
+    def new_particle_press(self):
         keys = pygame.key.get_pressed()
         if keys[pg.K_0]:
             self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def update(self):
-        self.new_particle_p()
-        self.new_particle_t()
+        self.new_particle_press()
+        self.new_particle_timer()
 
     def draw(self):
         for i in self.nutrient_array:
