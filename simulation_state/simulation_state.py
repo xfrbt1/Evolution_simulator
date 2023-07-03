@@ -18,9 +18,9 @@ class Simulation_State:
     def __init__(self):
         pg.init()
 
+        self.iteration = 0
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         self.clock = pg.time.Clock()
-        self.start_time = pg.time.get_ticks()
         self.new_state()
 
     def new_state(self):
@@ -35,11 +35,15 @@ class Simulation_State:
         self.nutrients.update()
         self.red_entities.update()
 
+        self.iteration += 1
+
     def draw(self):
         self.screen.fill(color_white)
-
         self.nutrients.draw()
         self.red_entities.draw()
+
+    def create_log(self):
+        print(*self.red_entities.red_entity_array)
 
     @staticmethod
     def check_event():
@@ -50,6 +54,7 @@ class Simulation_State:
 
     def run(self):
         while True:
+            self.create_log()
             self.update()
             self.draw()
             self.check_event()

@@ -13,11 +13,11 @@ class Nutrient:
         self.first_nutrients()
 
     def first_nutrients(self):
-        self.nutrient_array.append((200, 200))
-        self.nutrient_array.append((600, 500))
+        for i in range(FIRST_NUTRIENTS_AMOUNT):
+            self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def new_particle_timer(self):
-        if int((pg.time.get_ticks() - self.state.start_time) / 1000) % NUTRIENTS_PER_SEC == 0:
+        if self.state.iteration % NUTRIENT_QUANTITY_DIVISOR == 0:
             self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def new_particle_press(self):
