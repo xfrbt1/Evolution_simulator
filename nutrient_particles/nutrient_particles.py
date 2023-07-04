@@ -17,13 +17,14 @@ class Nutrient:
             self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def new_particle_timer(self):
-        if self.state.iteration % NUTRIENT_QUANTITY_DIVISOR == 0:
+        if self.state.iteration_step % NUTRIENT_QUANTITY_DIVISOR == 0:
             self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def new_particle_press(self):
         keys = pygame.key.get_pressed()
         if keys[pg.K_0]:
-            self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
+            for i in range(50):
+                self.nutrient_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
 
     def update(self):
         self.new_particle_press()
@@ -37,6 +38,9 @@ class Nutrient:
     @property
     def get_amount(self):
         return len(self.nutrient_array)
+
+    def __str__(self):
+        return f"nutrients amount: {self.get_amount}"
 
 
 
