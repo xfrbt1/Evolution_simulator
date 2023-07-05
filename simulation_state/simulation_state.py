@@ -1,5 +1,6 @@
 import os
-from collections import OrderedDict
+import pickle
+import threading
 import pygame as pg
 
 from config import *
@@ -27,9 +28,6 @@ class Simulation_State:
 
         self.new_state()
 
-        self.reds_data = dict()
-        self.nutrients_data = dict()
-
     def new_state(self):
         self.nutrients = Nutrient(self)
         self.reds = Red_Entity(self)
@@ -55,15 +53,24 @@ class Simulation_State:
                 self.running = False
                 pg.quit()
 
+    def data_collect(self):
+        self.reds.data_collect()
+        self.nutrients.data_collect()
+
     def run(self):
         while self.running:
+            threading.Thread(target=self.data_collect()).start()
             self.update()
             self.draw()
             self.check_event()
 
-    @staticmethod
-    def end_simulation():
-        pass
+    def end_simulation(self):
+        print('END')
+
+    def save_data(self):
+        self.nutrients.save_data()
+        self.reds.save_data()
+
 
 
 

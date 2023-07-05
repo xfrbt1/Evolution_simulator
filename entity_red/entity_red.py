@@ -1,4 +1,8 @@
+import pickle
+
 import pygame as pg
+from copy import deepcopy
+
 from config import *
 
 
@@ -23,6 +27,8 @@ class Red_Entity:
         self.dead_reds_array = list()
         self.append_progenitor()
 
+        self.reds_data = dict()
+
     def append_progenitor(self):
         self.reds_array.append([
             RED.entity_x,
@@ -40,7 +46,7 @@ class Red_Entity:
 
         for entity in self.reds_array:
             if entity[4] is None:
-                for nutrient in self.nutrients.nutrient_array:
+                for nutrient in self.nutrients.nutrients_array:
                     target_sum = (abs(entity[0] - nutrient[0]) + abs(entity[1] - nutrient[1]))
                     if entity[4] is None or target_sum < entity[4]:
                         entity[2] = nutrient[0]
@@ -65,7 +71,7 @@ class Red_Entity:
     def check_nutrients_existence(self):
 
         for entity in self.reds_array:
-            if (entity[2], entity[3]) not in self.nutrients.nutrient_array:
+            if (entity[2], entity[3]) not in self.nutrients.nutrients_array:
                 entity[2] = None
                 entity[3] = None
                 entity[4] = None
@@ -77,13 +83,13 @@ class Red_Entity:
 
     def reds_eat_nutrients(self):
         for entity in range(len(self.reds_array)):
-            for nutrient in range(len(self.nutrients.nutrient_array)):
+            for nutrient in range(len(self.nutrients.nutrients_array)):
 
-                if abs(self.reds_array[entity][0] - self.nutrients.nutrient_array[nutrient][0]) <= \
+                if abs(self.reds_array[entity][0] - self.nutrients.nutrients_array[nutrient][0]) <= \
                         self.reds_array[entity][7]:
-                    if abs(self.reds_array[entity][1] - self.nutrients.nutrient_array[nutrient][1]) <= \
+                    if abs(self.reds_array[entity][1] - self.nutrients.nutrients_array[nutrient][1]) <= \
                             self.reds_array[entity][7]:
-                        self.nutrients.nutrient_array.remove(self.nutrients.nutrient_array[nutrient])
+                        self.nutrients.nutrients_array.remove(self.nutrients.nutrients_array[nutrient])
                         self.increment_energy(entity)
                         break
 
@@ -91,8 +97,8 @@ class Red_Entity:
         for entity in self.reds_array:
             if entity[2] is not None:
                 if abs(entity[0] - entity[2]) <= entity[7] and abs(entity[1] - entity[3]) <= entity[7]:
-                    if (entity[2], entity[3]) in self.nutrients.nutrient_array:
-                        self.nutrients.nutrient_array.remove((entity[2], entity[3]))
+                    if (entity[2], entity[3]) in self.nutrients.nutrients_array:
+                        self.nutrients.nutrients_array.remove((entity[2], entity[3]))
                         entity[5] += entity[8]
 
     def check_collisions(self):
@@ -155,7 +161,6 @@ class Red_Entity:
                 self.reds_array.remove(entity)
 
     def update(self):
-        self.create_log()
 
         self.check_nutrients_existence()
         self.choose_target()
@@ -196,6 +201,15 @@ class Red_Entity:
     def __str__(self):
         return f"REDS AMOUNT: {self.get_red_amount}\nDEAD AMOUNT: {self.get_dead_amount}"
 
-    def create_log(self):
+    def data_collect(self):
         if self.state.iteration_step % 100 == 0:
-            print(self.state.iteration_step, ":", self.reds_array)
+            self.reds_data[self.state.iteration_step] = deepcopy(self.reds_array)
+
+    def save_data(self):
+
+        try:
+            with open('database/reds_data.bin', 'wb') as file:
+                pickle.dump(self.reds_data, file)
+
+        except Exception as ex:
+            print(ex)
