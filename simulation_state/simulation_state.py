@@ -1,5 +1,6 @@
+import os
+from collections import OrderedDict
 import pygame as pg
-import sys
 
 from config import *
 from nutrient_particles.nutrient_particles import Nutrient
@@ -19,13 +20,19 @@ class Simulation_State:
         pg.init()
 
         self.iteration_step = 0
+        self.running = True
+
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         self.clock = pg.time.Clock()
+
         self.new_state()
+
+        self.reds_data = dict()
+        self.nutrients_data = dict()
 
     def new_state(self):
         self.nutrients = Nutrient(self)
-        self.red_entities = Red_Entity(self)
+        self.reds = Red_Entity(self)
 
     def update(self):
         pg.display.set_caption(f"{CAPTION}")
@@ -33,40 +40,30 @@ class Simulation_State:
         self.clock.tick(FPS)
 
         self.nutrients.update()
-        self.red_entities.update()
+        self.reds.update()
 
         self.iteration_step += 1
 
     def draw(self):
         self.screen.fill(color_white)
         self.nutrients.draw()
-        self.red_entities.draw()
+        self.reds.draw()
 
-    def create_log(self):
-        pass
-
-    @staticmethod
-    def check_event():
+    def check_event(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
+                self.running = False
                 pg.quit()
-                sys.exit()
-
-    def print_data(self):
-        if self.iteration_step % 100 == 0:
-            print('iteration:', self.iteration_step)
-            print('fps: ', round(self.clock.get_fps(), 2))
-            print(self.red_entities)
-            print(self.nutrients)
-            print('_____________________')
 
     def run(self):
-        while True:
+        while self.running:
             self.update()
             self.draw()
             self.check_event()
-            self.print_data()
 
+    @staticmethod
+    def end_simulation():
+        pass
 
 
 

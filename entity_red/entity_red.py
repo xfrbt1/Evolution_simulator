@@ -2,15 +2,16 @@ import pygame as pg
 from config import *
 
 
-class REDS:
-    entity_x = WIDTH//2  # 0
-    entity_y = HEIGHT//2  # 1
+class RED:
+    entity_x = WIDTH // 2  # 0
+    entity_y = HEIGHT // 2  # 1
     target_x = None  # 2
     target_y = None  # 3
     target_sum = None  # 4
     energy = 99  # 5
     speed = 1  # 6
     capture_radius = 1  # 7
+    saturation = 30  # 8
 
 
 class Red_Entity:
@@ -18,23 +19,26 @@ class Red_Entity:
         self.state = state
         self.nutrients = state.nutrients
 
-        self.red_entity_array = list()
-        self.dead_red_array = list()
+        self.reds_array = list()
+        self.dead_reds_array = list()
         self.append_progenitor()
 
     def append_progenitor(self):
-        self.red_entity_array.append([REDS.entity_x,
-                                      REDS.entity_y,
-                                      REDS.target_x,
-                                      REDS.target_y,
-                                      REDS.target_sum,
-                                      REDS.energy,
-                                      REDS.speed,
-                                      REDS.capture_radius])
+        self.reds_array.append([
+            RED.entity_x,
+            RED.entity_y,
+            RED.target_x,
+            RED.target_y,
+            RED.target_sum,
+            RED.energy,
+            RED.speed,
+            RED.capture_radius,
+            RED.saturation,
+        ])
 
     def choose_target(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if entity[4] is None:
                 for nutrient in self.nutrients.nutrient_array:
                     target_sum = (abs(entity[0] - nutrient[0]) + abs(entity[1] - nutrient[1]))
@@ -45,7 +49,7 @@ class Red_Entity:
 
     def move(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if (entity[3] or entity[2]) is None:
                 continue
             if entity[0] < entity[2]:
@@ -60,42 +64,41 @@ class Red_Entity:
 
     def check_nutrients_existence(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if (entity[2], entity[3]) not in self.nutrients.nutrient_array:
                 entity[2] = None
                 entity[3] = None
                 entity[4] = None
 
     def set_target_none(self, i):
-        self.red_entity_array[i][2] = None
-        self.red_entity_array[i][3] = None
-        self.red_entity_array[i][4] = None
+        self.reds_array[i][2] = None
+        self.reds_array[i][3] = None
+        self.reds_array[i][4] = None
 
     def reds_eat_nutrients(self):
-        for entity in range(len(self.red_entity_array)):
+        for entity in range(len(self.reds_array)):
             for nutrient in range(len(self.nutrients.nutrient_array)):
 
-                if abs(self.red_entity_array[entity][0] - self.nutrients.nutrient_array[nutrient][0]) <= \
-                        self.red_entity_array[entity][7]:
-                    if abs(self.red_entity_array[entity][1] - self.nutrients.nutrient_array[nutrient][1]) <= \
-                            self.red_entity_array[entity][7]:
-
+                if abs(self.reds_array[entity][0] - self.nutrients.nutrient_array[nutrient][0]) <= \
+                        self.reds_array[entity][7]:
+                    if abs(self.reds_array[entity][1] - self.nutrients.nutrient_array[nutrient][1]) <= \
+                            self.reds_array[entity][7]:
                         self.nutrients.nutrient_array.remove(self.nutrients.nutrient_array[nutrient])
                         self.increment_energy(entity)
                         break
 
     def reds_eat_nutrients_(self):
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if entity[2] is not None:
                 if abs(entity[0] - entity[2]) <= entity[7] and abs(entity[1] - entity[3]) <= entity[7]:
                     if (entity[2], entity[3]) in self.nutrients.nutrient_array:
                         self.nutrients.nutrient_array.remove((entity[2], entity[3]))
-                        entity[5] += 33
+                        entity[5] += entity[8]
 
     def check_collisions(self):
 
-        for entity_i in self.red_entity_array:
-            for entity_j in self.red_entity_array:
+        for entity_i in self.reds_array:
+            for entity_j in self.reds_array:
 
                 if entity_i == entity_j:
                     continue
@@ -108,48 +111,52 @@ class Red_Entity:
                     break
 
     def increment_energy(self, entity_index):
-        self.red_entity_array[entity_index][5] += 33
+        self.reds_array[entity_index][5] += 10
 
     def decrement_energy(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             entity[5] -= 1
 
     def check_death(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if entity[5] <= 0:
-                self.red_entity_array.remove(entity)
-                self.dead_red_array.append((entity[0], entity[1]))
+                self.reds_array.remove(entity)
+                self.dead_reds_array.append((entity[0], entity[1]))
 
     def clear_dead_list(self):
 
         if self.state.iteration_step % 500 == 0:
-            self.dead_red_array.clear()
+            self.dead_reds_array.clear()
 
     def make_division(self):
 
-        for entity in self.red_entity_array:
+        for entity in self.reds_array:
             if entity[5] >= 100:
-                self.red_entity_array.append([entity[0] + 10,
-                                              entity[1] + 10,
-                                              None,
-                                              None,
-                                              None,
-                                              60,
-                                              1,
-                                              1])
-                self.red_entity_array.append([entity[0] - 10,
-                                              entity[1] - 10,
-                                              None,
-                                              None,
-                                              None,
-                                              60,
-                                              1,
-                                              1])
-                self.red_entity_array.remove(entity)
+                self.reds_array.append([entity[0] + 10,
+                                        entity[1] + 10,
+                                        None,
+                                        None,
+                                        None,
+                                        60,
+                                        1,
+                                        1,
+                                        30])
+                self.reds_array.append([entity[0] - 10,
+                                        entity[1] - 10,
+                                        None,
+                                        None,
+                                        None,
+                                        60,
+                                        1,
+                                        1,
+                                        30])
+                self.reds_array.remove(entity)
 
     def update(self):
+        self.create_log()
+
         self.check_nutrients_existence()
         self.choose_target()
         self.reds_eat_nutrients_()
@@ -161,13 +168,13 @@ class Red_Entity:
 
     def draw_red_array(self):
 
-        for i in self.red_entity_array:
+        for i in self.reds_array:
             pg.draw.circle(self.state.screen, color_red,
                            (i[0], i[1]), 5)
 
     def draw_dead_reds(self):
 
-        for i in self.dead_red_array:
+        for i in self.dead_reds_array:
             pg.draw.circle(self.state.screen, color_gray_d,
                            (i[0], i[1]), 4)
 
@@ -177,11 +184,18 @@ class Red_Entity:
 
     @property
     def get_red_amount(self):
-        return len(self.red_entity_array)
+        return len(self.reds_array)
 
     @property
     def get_dead_amount(self):
-        return len(self.dead_red_array)
+        return len(self.dead_reds_array)
+
+    def get_red_list(self):
+        return self.reds_array
 
     def __str__(self):
-        return f"red amount: {self.get_red_amount}\ndead amount: {self.get_dead_amount}"
+        return f"REDS AMOUNT: {self.get_red_amount}\nDEAD AMOUNT: {self.get_dead_amount}"
+
+    def create_log(self):
+        if self.state.iteration_step % 100 == 0:
+            print(self.state.iteration_step, ":", self.reds_array)

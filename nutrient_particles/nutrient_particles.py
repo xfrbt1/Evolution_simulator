@@ -10,6 +10,7 @@ class Nutrient:
 
         self.state = state
         self.nutrient_array = list()
+
         self.first_nutrients()
 
     def first_nutrients(self):
@@ -40,7 +41,7 @@ class Nutrient:
         return len(self.nutrient_array)
 
     def __str__(self):
-        return f"nutrients amount: {self.get_amount}"
+        return f"NUTRIENTS AMOUNT: {self.get_amount}"
 
 
 
