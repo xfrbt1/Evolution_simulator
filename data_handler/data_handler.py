@@ -37,5 +37,24 @@ class Data_Handler:
         for k, v in self.nutrients_data.items():
             print(k, ':', v)
 
+    def population(self):
+        red_y, iteration_x = list(), list()
+
+        for itr, red in self.reds_data.items():
+            iteration_x.append(itr)
+            red_y.append(len(red))
+
+        return iteration_x, red_y
+
+    def nutrients(self):
+        n_y, i_x = list(), list()
+
+        for i, n in self.nutrients_data.items():
+            i_x.append(i)
+            n_y.append(n)
+
+        return i_x, n_y
+
+
 
 

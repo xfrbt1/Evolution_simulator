@@ -175,7 +175,7 @@ class Red_Entity:
 
         for i in self.reds_array:
             pg.draw.circle(self.state.screen, color_red,
-                           (i[0], i[1]), 5)
+                           (i[0], i[1]), i[7]+4)
 
     def draw_dead_reds(self):
 
