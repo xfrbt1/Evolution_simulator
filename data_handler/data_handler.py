@@ -29,14 +29,6 @@ class Data_Handler:
         except Exception as ex:
             print(ex)
 
-    def print_reds_data(self):
-        for k, v in self.reds_data.items():
-            print(k, ':', v)
-
-    def print_nutrients_data(self):
-        for k, v in self.nutrients_data.items():
-            print(k, ':', v)
-
     def average_reds_amount(self):
         s = 0
         n = 0
@@ -64,8 +56,9 @@ class Data_Handler:
 
         return i_x, n_y
 
-    def generation_list(self):
+    def generations_list(self):
         generations = list()
+
         for entity_list in self.reds_data.values():
             for entity in entity_list:
                 if (entity[9], entity[10]) not in generations:
@@ -73,20 +66,92 @@ class Data_Handler:
 
         return generations
 
-    def print_generations(self, generations_list):
-        for gen in generations_list:
-            print("generation: ", gen[0], gen[1])
-        print(generations_list)
+    def generations_characteristics(self):
+        gen_crt = dict()
 
-    def dictionary(self, generations_list):
-        graph = {}
+        for entity_list in self.reds_data.values():
+            for entity in entity_list:
+                if entity[10] not in gen_crt:
+                    gen_crt[entity[10]] = (entity[6],
+                                           entity[7],
+                                           entity[8])
+
+        return gen_crt
+
+    def generations_colors(self):
+        gen_colors = dict()
+
+        for entity_list in self.reds_data.values():
+            for entity in entity_list:
+                if entity[10] not in gen_colors.keys():
+                    gen_colors[entity[10]] = (entity[11][0] / 255, entity[11][1] / 255, entity[11][2] / 255)
+
+        return gen_colors
+
+    def generations_weight(self):
+        gen_amount = dict()
+
+        for entity_list in self.reds_data.values():
+            for entity in entity_list:
+                if entity[10] not in gen_amount.keys():
+                    gen_amount[entity[10]] = 0
+                else:
+                    gen_amount[entity[10]] += 1
+
+        return gen_amount
+
+    def generations_dictionary_graph(self):
+
+        generations_list = self.generations_list()
+        graph = dict()
+
         for gen, gen_scr in generations_list:
-            if gen_scr not in graph:
-                graph[gen_scr] = []
+            if gen_scr not in graph.keys():
+                graph[gen_scr] = list()
+
+        for gen_parents in graph.keys():
+            for gen, gen_scr in generations_list:
+                if gen_parents in gen_scr and len(gen_scr) == len(gen_parents) + 1:
+                    graph[gen_parents].append(gen_scr)
+
+        return graph
+
+    def top_generations(self, n):
+        scrs = list()
+        weights = list()
+        colors = list()
+
+        gen_color = self.generations_colors()
+        gen_weight = self.generations_weight()
+
+        top_gen = sorted(gen_weight.items(), key=lambda x: x[1], reverse=True)[:n]
+
+        for gen in top_gen:
+            scrs.append(gen[0])
+            weights.append(gen[1])
+            colors.append(gen_color[gen[0]])
+
+        return scrs, weights, colors
+
+    def top_generations_statistics(self, n):
+        gen_ch = self.generations_characteristics()
+        gen_weight = self.generations_weight()
+
+        top_gen = sorted(gen_weight.items(), key=lambda x: x[1], reverse=True)[:n]
+
+        for gen in top_gen:
+            print("\n_____________________________________")
+            print(f"GENERATION SCRIPT: {gen[0]}")
+            print(f"GENERATION WEIGHT: {gen[1]}")
+            print(f"SPEED: {round(gen_ch[gen[0]][0], 2)}")
+            print(f"SIZE: {round(gen_ch[gen[0]][1], 2)}")
+            print(f"SATURATION: {gen_ch[gen[0]][2]}")
 
 
 
-        print(graph)
+
+
+
 
 
 

@@ -19,7 +19,7 @@ class RED:
     saturation = 30  # 8
     generation_id = 0  # 9
     generation_id_str = 'p'  # 10
-    color = (255, 0, 0)
+    color = (255, 0, 0)  # 11
 
     fields = {
         6: 'sp',
@@ -145,13 +145,12 @@ class Red_Entity:
 
         for entity in self.reds_array:
             if entity[5] >= 100:
-                mutation = random.randint(0, 100)
+                mutation = random.randint(0, MUTATION_FREQ)
                 self.append_after_division(entity, mutation)
                 self.reds_array.remove(entity)
 
     def append_after_division(self, entity, mutate):
         if mutate == 100:
-            print('\n')
             field = random.randint(6, 8)
             if field == 7:
                 modification = random.choice([1, 3, -1])
@@ -160,12 +159,10 @@ class Red_Entity:
             else:
                 modification = random.choice([2, -2])
 
-            print(RED.fields[field], '+', modification)
             entity[field] += modification
             entity[9] += 1
             entity[10] += random.choice(ALF)
             entity[11] = random.choice(COLORS)
-            print('\nENTITY AFTER UPDATE\n', entity)
 
         x = entity[0]
         y = entity[1]
