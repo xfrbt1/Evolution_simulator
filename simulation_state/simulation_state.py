@@ -61,11 +61,13 @@ class Simulation_State:
     def txt_info(self):
         pg.draw.rect(self.screen, color_white, TXT_RECT_CORDS)
         itr_step_txt = self.font.render(f'itr: {self.iteration_step}', True, color_black)
+        fps_txt = self.font.render(f'fps: {int(self.clock.get_fps())}', True, color_black)
         reds_txt = self.font.render(f'reds: {self.reds.get_red_amount}', True, color_black)
         nutrients_txt = self.font.render(f'nutr: {self.nutrients.get_amount}', True, color_black)
         self.screen.blit(itr_step_txt, (TXT_X, 10))
-        self.screen.blit(reds_txt, (TXT_X, 30))
-        self.screen.blit(nutrients_txt, (TXT_X, 50))
+        self.screen.blit(fps_txt, (TXT_X, 30))
+        self.screen.blit(reds_txt, (TXT_X, 50))
+        self.screen.blit(nutrients_txt, (TXT_X, 70))
 
     def run(self):
         while self.running:

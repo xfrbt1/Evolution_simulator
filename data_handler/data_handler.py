@@ -37,6 +37,15 @@ class Data_Handler:
         for k, v in self.nutrients_data.items():
             print(k, ':', v)
 
+    def average_reds_amount(self):
+        s = 0
+        n = 0
+        for red_list in self.reds_data.values():
+            n += 1
+            s += len(red_list)
+
+        return s / n
+
     def population(self):
         red_y, iteration_x = list(), list()
 
@@ -54,6 +63,31 @@ class Data_Handler:
             n_y.append(n)
 
         return i_x, n_y
+
+    def generation_list(self):
+        generations = list()
+        for entity_list in self.reds_data.values():
+            for entity in entity_list:
+                if (entity[9], entity[10]) not in generations:
+                    generations.append((entity[9], entity[10]))
+
+        return generations
+
+    def print_generations(self, generations_list):
+        for gen in generations_list:
+            print("generation: ", gen[0], gen[1])
+        print(generations_list)
+
+    def dictionary(self, generations_list):
+        graph = {}
+        for gen, gen_scr in generations_list:
+            if gen_scr not in graph:
+                graph[gen_scr] = []
+
+
+
+        print(graph)
+
 
 
 
