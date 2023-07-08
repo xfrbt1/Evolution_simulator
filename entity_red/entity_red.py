@@ -171,8 +171,9 @@ class Red_Entity:
         saturation = entity[8]
         color = entity[11]
 
-        self.reds_array.append([x+entity[7], y-entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
-        self.reds_array.append([x-entity[7], y+entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
+        # self.reds_array.append([x+entity[7], y-entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
+        self.reds_array.append([x+3, y+3, None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
+        self.reds_array.append([x-3, y-3, None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
 
     def update(self):
         self.check_nutrients_existence()
