@@ -21,12 +21,6 @@ class RED:
     generation_id_str = 'p'  # 10
     color = (255, 0, 0)  # 11
 
-    fields = {
-        6: 'sp',
-        7: 'sz',
-        8: 'st'
-    }
-
 
 class Red_Entity:
     def __init__(self, state):
@@ -157,7 +151,7 @@ class Red_Entity:
             elif field == 6:
                 modification = random.choice([0.2, -0.2, -0.4])
             else:
-                modification = random.choice([2, -2])
+                modification = random.choice([4, -2])
 
             entity[field] += modification
             entity[9] += 1
@@ -171,9 +165,8 @@ class Red_Entity:
         saturation = entity[8]
         color = entity[11]
 
-        # self.reds_array.append([x+entity[7], y-entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
-        self.reds_array.append([x+3, y+3, None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
-        self.reds_array.append([x-3, y-3, None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
+        self.reds_array.append([x+entity[7], y-entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
+        self.reds_array.append([x-entity[7], y+entity[7], None, None, None, 60, speed, size, saturation, entity[9], entity[10], color])
 
     def update(self):
         self.check_nutrients_existence()

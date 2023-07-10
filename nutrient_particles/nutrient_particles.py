@@ -26,9 +26,11 @@ class Nutrient:
 
     def new_particle_press(self):
         keys = pygame.key.get_pressed()
-        if keys[pg.K_0]:
+        if keys[pg.K_9]:
             for i in range(50):
                 self.nutrients_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
+        if keys[pg.K_0]:
+            self.nutrients_array.clear()
 
     def update(self):
         self.new_particle_press()

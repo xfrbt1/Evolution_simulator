@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     plots_constructor.data_handler.top_generations_statistics(5)
 
-    plots_constructor.generations_graph(None)
+    plots_constructor.generations_graph(-2)
 
     plots_constructor.top_generations_bar(5)
 

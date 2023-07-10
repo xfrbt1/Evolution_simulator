@@ -42,7 +42,7 @@ class Plots_Constructor:
                 node_color=[gen_colors[node] for node in nx_graph.nodes()],
                 with_labels=True,
                 font_size=10,
-                node_size=900,
+                node_size=150,
                 labels=new_names)
 
         plt.show()
