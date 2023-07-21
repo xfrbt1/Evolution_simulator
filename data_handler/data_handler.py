@@ -29,7 +29,7 @@ class Data_Handler:
         except Exception as ex:
             print(ex)
 
-    def average_reds_amount(self):
+    def average_reds_amount(self) -> float:
         s = 0
         n = 0
         for red_list in self.reds_data.values():
@@ -38,7 +38,7 @@ class Data_Handler:
 
         return s / n
 
-    def population(self):
+    def population(self) -> tuple[list, list]:
         red_y, iteration_x = list(), list()
 
         for itr, red in self.reds_data.items():
@@ -47,7 +47,7 @@ class Data_Handler:
 
         return iteration_x, red_y
 
-    def nutrients(self):
+    def nutrients(self) -> tuple[list, list]:
         n_y, i_x = list(), list()
 
         for i, n in self.nutrients_data.items():
@@ -56,7 +56,7 @@ class Data_Handler:
 
         return i_x, n_y
 
-    def generations_list(self):
+    def generations_list(self) -> list:
         generations = list()
 
         for entity_list in self.reds_data.values():
@@ -66,7 +66,7 @@ class Data_Handler:
 
         return generations
 
-    def generations_characteristics(self):
+    def generations_characteristics(self) -> dict:
         gen_crt = dict()
 
         for entity_list in self.reds_data.values():
@@ -78,7 +78,7 @@ class Data_Handler:
 
         return gen_crt
 
-    def generations_colors(self):
+    def generations_colors(self) -> dict:
         gen_colors = dict()
 
         for entity_list in self.reds_data.values():
@@ -88,7 +88,7 @@ class Data_Handler:
 
         return gen_colors
 
-    def generations_weight(self):
+    def generations_weight(self) -> dict:
         gen_amount = dict()
 
         for entity_list in self.reds_data.values():
@@ -100,7 +100,7 @@ class Data_Handler:
 
         return gen_amount
 
-    def generations_dictionary_graph(self):
+    def generations_dictionary_graph(self) -> dict:
 
         generations_list = self.generations_list()
         graph = dict()
@@ -116,7 +116,7 @@ class Data_Handler:
 
         return graph
 
-    def top_generations(self, n):
+    def top_generations(self, n: int) -> tuple[list, list, list]:
         scrs = list()
         weights = list()
         colors = list()
@@ -133,7 +133,7 @@ class Data_Handler:
 
         return scrs, weights, colors
 
-    def top_generations_statistics(self, n):
+    def top_generations_statistics(self, n: int):
         gen_ch = self.generations_characteristics()
         gen_weight = self.generations_weight()
 

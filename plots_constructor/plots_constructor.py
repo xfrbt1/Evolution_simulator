@@ -61,6 +61,8 @@ class Plots_Constructor:
 
         plt.show()
 
+    def top_generations_statistics(self, n=5):
+        return self.data_handler.top_generations_statistics(n)
 
 
 

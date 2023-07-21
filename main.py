@@ -13,11 +13,11 @@ if __name__ == '__main__':
 
     plots_constructor.population_nutrients_plots()
 
-    plots_constructor.data_handler.top_generations_statistics(5)
+    plots_constructor.top_generations_statistics()
 
-    plots_constructor.generations_graph(-2)
+    plots_constructor.generations_graph()
 
-    plots_constructor.top_generations_bar(5)
+    plots_constructor.top_generations_bar()
 
 
 

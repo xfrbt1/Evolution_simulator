@@ -77,13 +77,19 @@ class Simulation_State:
             self.txt_info()
             self.check_event()
 
-    @staticmethod
-    def end_simulation():
-        print('END')
-
     def save_data(self):
         self.nutrients.save_data()
         self.reds.save_data()
+
+    def __repr__(self):
+        return f"{self}"
+
+    def __str__(self):
+        return f"{self.iteration_step}:{self.reds}"
+
+    @staticmethod
+    def end_simulation():
+        print('END')
 
 
 

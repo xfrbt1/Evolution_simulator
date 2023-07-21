@@ -196,14 +196,14 @@ class Red_Entity:
         self.draw_red_array()
 
     @property
-    def get_red_amount(self):
+    def get_red_amount(self) -> int:
         return len(self.reds_array)
 
     @property
-    def get_dead_amount(self):
+    def get_dead_amount(self) -> int:
         return len(self.dead_reds_array)
 
-    def get_red_list(self):
+    def get_red_list(self) -> list:
         return self.reds_array
 
     def __str__(self):

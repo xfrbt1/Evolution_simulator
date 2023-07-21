@@ -42,7 +42,7 @@ class Nutrient:
                            (i[0], i[1]), 3)
 
     @property
-    def get_amount(self):
+    def get_amount(self) -> int:
         return len(self.nutrients_array)
 
     def __str__(self):
