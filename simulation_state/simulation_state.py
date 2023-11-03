@@ -53,6 +53,8 @@ class Simulation_State:
             if event.type == pg.QUIT:
                 self.running = False
                 pg.quit()
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                print(pg.mouse.get_pos())
 
     def data_collect(self):
         self.reds.data_collect()

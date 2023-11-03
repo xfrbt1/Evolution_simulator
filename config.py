@@ -1,8 +1,8 @@
 FPS = 240
 CAPTION = "SIMULATOR"
 
-HEIGHT = 750
-WIDTH = 1100
+HEIGHT = 720
+WIDTH = 1000
 
 TXT_SIZE = 30
 TXT_RECT_CORDS = (WIDTH - WIDTH // 10, 0, WIDTH // 10, 100)
@@ -26,7 +26,9 @@ color_gray_d = (100, 100, 100)
 COLORS = [(255, 100, 100), (255, 150, 150), (255, 150, 100), (255, 150, 50), (255, 200, 0), (255, 100, 200),
           (255, 50, 255), (255, 150, 255), (255, 0, 255), (255, 150, 255), (255, 200, 255), (255, 0, 255)]
 
-eng = "abcdefghijklmnopqrstuvwxyzABCDFGHIJKLMNOPQRSTUVWXYZ"
+# COLORS = [(100, 100, 100), (150, 150, 150), (200, 200, 200), (100, 230, 230), (250, 100, 250)]
+
+eng = "abcdefghijklmnopqrstuvwxyz1234567890ABCDFGHIJKLMNOPQRSTUVWXYZ"
 ALF = [i for i in eng]
 
 

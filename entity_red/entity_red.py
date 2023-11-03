@@ -144,7 +144,7 @@ class Red_Entity:
                 self.reds_array.remove(entity)
 
     def append_after_division(self, entity, mutate):
-        if mutate == 100:
+        if mutate == MUTATION_FREQ:
             field = random.randint(6, 8)
             if field == 7:
                 modification = random.choice([1, 3, -1])
