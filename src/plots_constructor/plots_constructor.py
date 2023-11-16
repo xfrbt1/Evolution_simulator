@@ -1,5 +1,5 @@
-from config import *
-from data_handler.data_handler import Data_Handler
+from src.config import *
+from src.data_handler.data_handler import Data_Handler
 import matplotlib.pyplot as plt
 import networkx as nx
 

@@ -3,7 +3,7 @@ import random
 import pygame as pg
 import pygame.key
 
-from config import *
+from src.config import *
 
 
 class Nutrient:

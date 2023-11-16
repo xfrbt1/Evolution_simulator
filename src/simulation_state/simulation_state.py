@@ -1,11 +1,9 @@
-import os
-import pickle
 import threading
-import pygame as pg
 
-from config import *
-from nutrient_particles.nutrient_particles import Nutrient
-from entity_red.entity_red import Red_Entity
+import pygame as pg
+from src.config import *
+from src.entity_red.entity_red import Red_Entity
+from src.nutrient_particles.nutrient_particles import Nutrient
 
 
 class Simulation_State:

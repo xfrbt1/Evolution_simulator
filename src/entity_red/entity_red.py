@@ -4,7 +4,7 @@ import random
 import pygame as pg
 from copy import deepcopy
 
-from config import *
+from src.config import *
 
 
 class RED:

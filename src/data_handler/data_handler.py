@@ -1,5 +1,5 @@
 import pickle
-from config import *
+from src.config import *
 
 
 class Data_Handler:
@@ -11,7 +11,7 @@ class Data_Handler:
     def load_reds_data():
 
         try:
-            with open('database/reds_data.bin', 'rb') as file:
+            with open('src/database/reds_data.bin', 'rb') as file:
                 reds_data = pickle.load(file)
             return reds_data
 
@@ -22,7 +22,7 @@ class Data_Handler:
     def load_nutrients_data():
 
         try:
-            with open('database/nutrients_data.bin', 'rb') as file:
+            with open('src/database/nutrients_data.bin', 'rb') as file:
                 nutrients_data = pickle.load(file)
             return nutrients_data
 
