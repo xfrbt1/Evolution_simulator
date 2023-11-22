@@ -55,7 +55,7 @@ class Nutrient:
     def save_data(self):
 
         try:
-            with open('database/nutrients_data.bin', 'wb') as file:
+            with open('src/database/nutrients_data.bin', 'wb') as file:
                 pickle.dump(self.nutrients_data, file)
 
         except Exception as ex:

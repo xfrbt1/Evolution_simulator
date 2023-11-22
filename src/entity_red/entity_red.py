@@ -216,7 +216,7 @@ class Red_Entity:
     def save_data(self):
 
         try:
-            with open('database/reds_data.bin', 'wb') as file:
+            with open('src/database/reds_data.bin', 'wb') as file:
                 pickle.dump(self.reds_data, file)
 
         except Exception as ex:
