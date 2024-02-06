@@ -1,7 +1,7 @@
 from simulation_state.simulation_state import Simulation_State
 from plots_constructor.plots_constructor import Plots_Constructor
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     simulation_state = Simulation_State()
 
@@ -18,19 +18,3 @@ if __name__ == '__main__':
     plots_constructor.generations_graph()
 
     plots_constructor.top_generations_bar()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

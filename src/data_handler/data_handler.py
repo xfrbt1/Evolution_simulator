@@ -11,7 +11,7 @@ class Data_Handler:
     def load_reds_data():
 
         try:
-            with open('src/database/reds_data.bin', 'rb') as file:
+            with open("src/database/reds_data.bin", "rb") as file:
                 reds_data = pickle.load(file)
             return reds_data
 
@@ -22,7 +22,7 @@ class Data_Handler:
     def load_nutrients_data():
 
         try:
-            with open('src/database/nutrients_data.bin', 'rb') as file:
+            with open("src/database/nutrients_data.bin", "rb") as file:
                 nutrients_data = pickle.load(file)
             return nutrients_data
 
@@ -72,9 +72,7 @@ class Data_Handler:
         for entity_list in self.reds_data.values():
             for entity in entity_list:
                 if entity[10] not in gen_crt:
-                    gen_crt[entity[10]] = (entity[6],
-                                           entity[7],
-                                           entity[8])
+                    gen_crt[entity[10]] = (entity[6], entity[7], entity[8])
 
         return gen_crt
 
@@ -84,7 +82,11 @@ class Data_Handler:
         for entity_list in self.reds_data.values():
             for entity in entity_list:
                 if entity[10] not in gen_colors.keys():
-                    gen_colors[entity[10]] = (entity[11][0] / 255, entity[11][1] / 255, entity[11][2] / 255)
+                    gen_colors[entity[10]] = (
+                        entity[11][0] / 255,
+                        entity[11][1] / 255,
+                        entity[11][2] / 255,
+                    )
 
         return gen_colors
 
@@ -146,14 +148,3 @@ class Data_Handler:
             print(f"SPEED: {round(gen_ch[gen[0]][0], 2)}")
             print(f"SIZE: {round(gen_ch[gen[0]][1], 2)}")
             print(f"SATURATION: {gen_ch[gen[0]][2]}")
-
-
-
-
-
-
-
-
-
-
-

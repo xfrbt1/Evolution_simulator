@@ -18,17 +18,23 @@ class Nutrient:
 
     def first_nutrients(self):
         for i in range(FIRST_NUTRIENTS_AMOUNT):
-            self.nutrients_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
+            self.nutrients_array.append(
+                (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+            )
 
     def new_particle_timer(self):
         if self.state.iteration_step % NUTRIENT_QUANTITY_DIVISOR == 0:
-            self.nutrients_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
+            self.nutrients_array.append(
+                (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+            )
 
     def new_particle_press(self):
         keys = pygame.key.get_pressed()
         if keys[pg.K_9]:
             for i in range(50):
-                self.nutrients_array.append((random.randint(0, WIDTH), random.randint(0, HEIGHT)))
+                self.nutrients_array.append(
+                    (random.randint(0, WIDTH), random.randint(0, HEIGHT))
+                )
         if keys[pg.K_0]:
             self.nutrients_array.clear()
 
@@ -38,8 +44,7 @@ class Nutrient:
 
     def draw(self):
         for i in self.nutrients_array:
-            pg.draw.circle(self.state.screen, color_green_d,
-                           (i[0], i[1]), 3)
+            pg.draw.circle(self.state.screen, color_green_d, (i[0], i[1]), 3)
 
     @property
     def get_amount(self) -> int:
@@ -55,10 +60,8 @@ class Nutrient:
     def save_data(self):
 
         try:
-            with open('src/database/nutrients_data.bin', 'wb') as file:
+            with open("src/database/nutrients_data.bin", "wb") as file:
                 pickle.dump(self.nutrients_data, file)
 
         except Exception as ex:
             print(ex)
-
-
