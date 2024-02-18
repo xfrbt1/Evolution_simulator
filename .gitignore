@@ -16,3 +16,6 @@ env
 venv
 database
 
+.DS_Store
+src/.DS_Store
+

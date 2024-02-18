@@ -79,7 +79,6 @@ class Simulation_State:
         self.screen.blit(reds_txt, (TXT_X, 50))
         self.screen.blit(nutrients_txt, (TXT_X, 70))
 
-    @profile
     def run(self):
         while self.running:
             threading.Thread(target=self.data_collect()).start()
